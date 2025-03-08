@@ -38,6 +38,7 @@ public class TableController {
     
     public void excluir(JTable jTableTarefas){
         List<Tarefa> listaTarefas = GerenciaTarefas.getTarefas();
+        DefaultTableModel model = (DefaultTableModel) jTableTarefas.getModel();
         
         if(jTableTarefas.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um produto na tabela!", "Aviso", 0);
@@ -51,7 +52,12 @@ public class TableController {
             );
             
             if(resposta == JOptionPane.YES_OPTION){
-                GerenciaTarefas.getTarefas().remove(jTableTarefas.getSelectedRow());
+                Tarefa tarefaSelec = listaTarefas.get(jTableTarefas.getSelectedRow());
+                
+                listaTarefas.remove(tarefaSelec);
+                
+                model.removeRow(jTableTarefas.getSelectedRow());
+                
                 JOptionPane.showMessageDialog(null, "Produto excluído com sucesso", "Aviso", 1);
                 
                 preencherTableTarefas(jTableTarefas, listaTarefas);
